@@ -1,14 +1,47 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateCoffee = () => {
 
     const coffee = useLoaderData()
-    const { name, quantity, supplier, taste, category, details, photo} = coffee
+    const { _id, name, quantity, supplier, taste, category, details, photo} = coffee
 
-    const handleSubmit = () =>{
+    const handleSubmit = e => {
+        e.preventDefault()
+        const form = e.target;
+        const name = form.name.value;
+        const quantity = form.quantity.value;
+        const supplier = form.supplier.value;
+        const taste = form.taste.value;
+        const category = form.category.value;
+        const details = form.details.value;
+        const photo = form.photo.value;
+        const updateCoffee = { name, quantity, supplier, taste, category, details, photo }
+        console.log(updateCoffee)
 
+        fetch(`http://localhost:2000/coffee/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateCoffee)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if(data.acknowledged){
+                    Swal.fire({
+                        title: 'Updated Successfully',
+                        text: 'Do you want to continue',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                      })
+                }
+            })
     }
+
+
     return (
         <div>
         <div className='bg-[#F4F3F0] my-8 w-[80%] mx-auto'>
@@ -65,7 +98,7 @@ const UpdateCoffee = () => {
                     <input type="text" placeholder="Photo URL" name='photo' defaultValue={photo} className="input input-bordered" />
                 </label>
 
-                <input type="submit" value="Add Coffee" className='col-span-2 p-2 border bg-[#D2B48C] rounded-md my-4 font-medium' />
+                <input type="submit" value="Update Coffee" className='col-span-2 p-2 border bg-[#D2B48C] rounded-md my-4 font-medium' />
             </form>
         </div>
     </div>

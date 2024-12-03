@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const Coffee = ({ coffee }) => {
+const Coffee = ({ coffee, coffees, setCoffees }) => {
 
 
     const handleDelete = id => {
@@ -34,6 +34,8 @@ const Coffee = ({ coffee }) => {
                                 text: "Coffee removed from the list",
                                 icon: "success"
                             });
+                            const remaining = coffees.filter(coffee => coffee._id !== id)
+                            setCoffees(remaining)
                         }
                     })
             }

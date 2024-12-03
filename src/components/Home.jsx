@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import { Link, useLoaderData } from 'react-router-dom';
 import Coffee from './Coffee';
 
 const Home = () => {
 
-    const coffees = useLoaderData()
+    const loadedCoffees = useLoaderData()
+    const [coffees, setCoffees] = useState(loadedCoffees)
+
     console.log(coffees)
 
     return (
@@ -17,7 +19,7 @@ const Home = () => {
             </div>
             <div className='grid gap-5 md:grid-cols-2 my-6 w-10/12 mx-auto'>
                 {
-                    coffees.map(coffee => <Coffee coffee={coffee}/>)
+                    coffees.map(coffee => <Coffee coffee={coffee} coffees={coffees} setCoffees={setCoffees}/>)
                 }
             </div>
             
