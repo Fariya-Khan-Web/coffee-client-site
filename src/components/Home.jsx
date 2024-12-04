@@ -11,8 +11,8 @@ const Home = () => {
     console.log(coffees)
 
     return (
-        <div>
-            <Header/>
+        <div >
+            {/* <Header/> */}
             <div className='mx-auto text-center my-6'>
                 <h1 className='text-2xl font-semibold my-6'>Our Popular Products</h1>
                 <Link to={'/addcoffee'} className='btn bg-[#D2B48C] mx-auto'>Add Coffee</Link>

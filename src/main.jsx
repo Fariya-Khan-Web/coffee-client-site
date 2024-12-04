@@ -9,26 +9,37 @@ import Root from './components/Root';
 import AddCoffee from './components/AddCoffee';
 import UpdateCoffee from './components/UpdateCoffee';
 import Home from './components/Home';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import AuthProvider from './provider/AuthProvider';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root/>,
+    element: <Root />,
     children: [
       {
-        path:'/',
-        element: <Home/>,
-        loader: ()=> fetch('http://localhost:2000/coffee')
+        path: '/',
+        element: <Home />,
+        loader: () => fetch('http://localhost:2000/coffee')
       },
       {
-        path:'/addcoffee',
-        element: <AddCoffee/>
+        path: '/login',
+        element: <Login />
       },
       {
-        path:'/updatecoffee/:id',
-        element: <UpdateCoffee/>,
-        loader: ({params})=> fetch(`http://localhost:2000/coffee/${params.id}`)
+        path: '/register',
+        element: <Register />
+      },
+      {
+        path: '/addcoffee',
+        element: <AddCoffee />
+      },
+      {
+        path: '/updatecoffee/:id',
+        element: <UpdateCoffee />,
+        loader: ({ params }) => fetch(`http://localhost:2000/coffee/${params.id}`)
       }
     ]
   },
@@ -37,6 +48,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )
